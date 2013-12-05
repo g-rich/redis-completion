@@ -163,9 +163,15 @@ class RedisEngine(object):
     def _process_ids(self, id_list, limit, filters, mappers):
         ct = 0
         data = []
+        pipe = self.client.pipeline()
 
-        for raw_id in id_list:
-            raw_data = self.client.hget(self.data_key, raw_id)
+	for raw_id in id_list:
+            pipe.hget(self.data_key, raw_id)
+
+        pipe_data = pipe.execute()
+
+        for raw_data in pipe_data:
+
             if not raw_data:
                 continue
 
