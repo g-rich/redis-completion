@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='redis-completion',
-    version='0.5.0',
+    version='0.5.1',
     description='autocomplete with redis',
     author='Charles Leifer',
     author_email='coleifer@gmail.com',
@@ -14,7 +14,7 @@ setup(
         'redis_completion': [
         ],
     },
-    install_requires=['redis'],
+    install_requires=['redis>=3.0.0'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',

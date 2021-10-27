@@ -116,7 +116,7 @@ class RedisEngine(object):
             word_score = self.score_key(word) + self._offset
             key_score = (word_score * (i + 1)) + (title_score)
             for partial_key in self.autocomplete_keys(word):
-                pipe.zadd(self.search_key(partial_key), combined_id, key_score)
+                pipe.zadd(self.search_key(partial_key), {combined_id: key_score})
 
         pipe.execute()
 
@@ -225,7 +225,7 @@ class RedisEngine(object):
                     if part and part in boosts:
                         score *= 1 / boosts[part]
                 if orig_score != score:
-                    pipe.zadd(new_key, raw_id, score)
+                    pipe.zadd(new_key, {raw_id: score})
             pipe.execute()
 
         id_list = self.client.zrange(new_key, 0, -1)
