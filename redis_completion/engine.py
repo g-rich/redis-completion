@@ -165,7 +165,7 @@ class RedisEngine(object):
         data = []
         pipe = self.client.pipeline()
 
-	for raw_id in id_list:
+        for raw_id in id_list:
             pipe.hget(self.data_key, raw_id)
 
         pipe_data = pipe.execute()
