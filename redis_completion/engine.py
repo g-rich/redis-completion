@@ -214,7 +214,7 @@ class RedisEngine(object):
             new_key = self.get_cache_key(cleaned, boosts)
             if not self.client.exists(new_key):
                 # zinterstore also takes {k1: wt1, k2: wt2}
-                self.client.zinterstore(new_key, map(self.search_key, cleaned))
+                self.client.zinterstore(new_key, [self.search_key(key) for key in cleaned])
                 self.client.expire(new_key, self.cache_timeout)
 
         if boosts:
